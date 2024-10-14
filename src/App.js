@@ -5,7 +5,6 @@ import Homepage from './Pages/Homepage/Homepage';
 import Movie from './Pages/Movie/Movie';
 import MovieDetail from './Pages/MovieDetail/MovieDetail';
 import { Route, Routes } from 'react-router-dom';
-import Banner from './Component/Banner/Banner';
 
 function App() {
   return (
