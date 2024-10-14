@@ -27,7 +27,7 @@
 }
 @media (max-width:464px){
     .movieCard{
-        height:40vh;
+        height:265px;
     }
     .movieItem{
         padding:25px;
