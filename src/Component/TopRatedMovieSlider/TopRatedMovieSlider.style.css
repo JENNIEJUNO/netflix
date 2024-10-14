@@ -1,0 +1,10 @@
+.titleText{
+    font-size:30px;
+    font-weight:700;
+    margin:20px 0;
+    color:white;
+}
+.carousel-container{
+    overflow-x:hidden;
+    padding:1vw 0;
+}

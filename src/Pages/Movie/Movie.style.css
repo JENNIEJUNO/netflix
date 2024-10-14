@@ -1,0 +1,37 @@
+body{
+    background-color:black;
+}
+.orderItem:hover{
+    background-color:pink;
+}
+.page-link{
+    background:none;
+    color:red;
+    border:none;
+}
+.page-link:hover{
+    background-color:red;
+}
+.active .page-link {
+    background-color:red;
+}
+.pagination{
+    width:50%;
+    display:flex;
+    justify-content:center;
+    margin: 0 auto;
+}
+.pagination .page-item{
+    padding:0 !important;
+    width:15%;
+    display:flex;
+    justify-content:center;
+}
+@media (max-width:464px){
+    .pagination{
+        width:60%;
+    }
+    .pagination .page-item .page-link{
+        font-size:4vw;
+    }
+}
