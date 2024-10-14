@@ -22,7 +22,7 @@ const MovieDetail = () => {
     <div>
     <Banner />
     <Container style={{marginTop:"30px"}}>
-        <Row style={{minHeight:"90vh"}}>
+        <Row>
             <Col lg={6}  style={{height:"100%"}}>
                 <div style={{
                     backgroundImage:"url(" + `https://media.themoviedb.org/t/p/w600_and_h900_bestv2${data.poster_path}` + ")"
