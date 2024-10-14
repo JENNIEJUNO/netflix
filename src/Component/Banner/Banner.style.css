@@ -28,3 +28,8 @@
     border:none;
     border-radius:3px;
 }
+@media (max-width:464px){
+    .banner{
+        height:50vw;
+    }
+}
