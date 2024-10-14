@@ -7,10 +7,10 @@
 }
 .Image{
     color:white;
-    font-size:2vw;
+    font-size:20px;
 }
 .Image img{
-    width: 4vw;
+    width:50px;
     margin-right: .25rem !important;
     padding-bottom: 1.5rem !important;
     padding-top: 1.5rem !important;
