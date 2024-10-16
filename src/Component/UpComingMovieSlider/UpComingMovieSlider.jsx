@@ -20,7 +20,7 @@ const UpComingMovieSlider = ({genreData}) => {
 
   return (
     <div>
-        <MovieSlider title="Top Rated Movies" data={data} genreData={genreData}/>
+        <MovieSlider title="Up Coming Movies" data={data} genreData={genreData}/>
     </div>
   )
 }
