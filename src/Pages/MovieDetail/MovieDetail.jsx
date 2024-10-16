@@ -6,14 +6,26 @@ import { Container, Row, Col, Badge } from 'react-bootstrap'
 import RelatedMovie from '../../Component/RelatedMovie/RelatedMovie'
 import ReviewsMovie from '../../Component/ReviewsMovie/ReviewsMovie'
 import Banner from '../../Component/Banner/Banner'
+import { ClipLoader } from "react-spinners";
+import { useMovieGenre } from '../../hooks/useMovieGenre'
 
 const MovieDetail = () => {
     const { movieId } = useParams()
-    console.log('movieId', movieId)
     const {data, isLoading, isError, error} = useMovieDetail({movie_id: movieId})
-    console.log('jhhjhjhjjhjhjh', data)
+    console.log('fdsfsf', data)
+    const {data:genreData} = useMovieGenre()
+    const showGenre = (item) => {
+        if(!genreData) return []
+        const genreList = item.map((movie) => {
+        const genreObj = genreData.find((genre) => genre.id === movie.id)
+        return genreObj.name
+    })
+    return genreList
+    }
     if(isLoading){
-        return <div>Loading...</div>
+        return <div className="spinner">
+        <ClipLoader color="red" size={100}/>
+    </div>
     }
     if(isError){
         return <div>Error:{error.message}</div>
@@ -52,6 +64,11 @@ const MovieDetail = () => {
                     </div>
                     <div className="overview">
                         {data.overview}
+                    </div>
+                    <div style={{display:"flex"}}>
+                    {showGenre(data?.genres)?.map((item) => (
+                        <Badge bg="danger" className="detailGenre">{item}</Badge>
+                    ))}
                     </div>
                     <div className="py-4">
                         <div className="d-flex align-items-center mb-2">

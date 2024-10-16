@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import { useVideosMovie } from '../../hooks/useVideosMovie'
 import { Modal } from 'react-bootstrap'
 import YouTube from 'react-youtube'
+import { ClipLoader } from 'react-spinners'
 
 const VideoId = ({movieId, setShowModal, showModal}) => {
     const {data, isLoading, isError, error} = useVideosMovie({movie_id: movieId})
     console.log('movieId', data)
     if(isLoading){
-        return <div>Loading...</div>
-    }
+      return <div className="spinner">
+          <ClipLoader color="red" size={100}/>
+      </div>
+  }
     if(isError){
         return <div>Error:{error.message}</div>
     }

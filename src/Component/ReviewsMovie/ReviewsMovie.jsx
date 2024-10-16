@@ -2,6 +2,7 @@ import { useReviewsMovie } from '../../hooks/useReviewsMovie'
 import { useParams } from 'react-router-dom'
 import './ReviewsMovie.style.css'
 import { useState } from 'react'
+import { ClipLoader } from 'react-spinners'
 
 const ReviewsMovie = () => {
     const [sentence, setSentence] = useState([])
@@ -17,7 +18,9 @@ const ReviewsMovie = () => {
         console.log(sentence)
     }
     if(isLoading){
-        return <div>Loading...</div>
+        return <div className="spinner">
+            <ClipLoader color="red" size={100}/>
+        </div>
     }
     if(isError){
         return <div>Error:{error.message}</div>

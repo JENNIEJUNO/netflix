@@ -49,6 +49,15 @@
     margin: 0; /* p 태그의 기본 마진을 제거 */
     color: white;
 }
+.detailGenre{
+    margin-top:24px;
+    font-size: 13px;
+    padding:10px 15px !important;
+    margin-right: .5rem !important;
+    border-radius: 15px;
+    display:flex;
+    justify-content:center;
+}
 
 @media (max-width:464px){
     .movieDetail{

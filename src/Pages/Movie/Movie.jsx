@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import './Movie.style.css'
 import { useSearchMovie } from '../../hooks/useSearchMovie'
 import { useSearchParams } from 'react-router-dom'
-import { Container, Row, Col, ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap'
+import { Container, Row, Col, ButtonGroup, Dropdown, DropdownButton, Badge } from 'react-bootstrap'
 import MovieCard from '../../Component/MovieCard/MovieCard'
 import { useMovieGenre } from '../../hooks/useMovieGenre'
 import ReactPaginate from 'react-paginate'
+import { ClipLoader } from "react-spinners";
 
 const Movie = () => {
     const [query, setQuery] = useSearchParams()
@@ -20,21 +21,28 @@ const Movie = () => {
     const moiveGenre = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History',
         'Horror', 'Music', 'Mystery', 'Romance', 'Science Fiction', 'TV Movie', 'Thriller', 'War', 'Western'
     ]
-    console.log('dddd', data)
+    
     useEffect(() => {
         if (data?.results) {
             setSortedMovies(data.results)
         }
     }, [data])
     if(isLoading){
-        return <div>Loading...</div>
+        return <div className="spinner">
+            <ClipLoader color="red" size={100}/>
+        </div>
     }
     if(isError){
         return <div>Error:{error.message}</div>
     }
-    if(!data?.results || data.results.length === 0){
-        return <div>No data available</div>
+    if(!sortedMovies || sortedMovies.length === 0){
+        return<div style={{width:"100%", display:"flex", justifyContent:"center", position:"relative"}}>
+            <Badge bg="danger" className="noData">No data available</Badge>
+        </div>
     }
+
+    const totalPage = Math.ceil(sortedMovies.length / 20)
+
     const updateMovies = (newGenreOrder, newPopularityOrder) => {
         const genreFilteredMovies = newGenreOrder === '장르별 검색'
         ? data.results
@@ -45,7 +53,7 @@ const Movie = () => {
             })
         )
 
-        const sortedMovies = [...genreFilteredMovies].sort((a, b) => {
+        const Movies = [...genreFilteredMovies].sort((a, b) => {
             if(newPopularityOrder === '인기 순' || !newPopularityOrder){{
                 return b.popularity - a.popularity;
             }}else if(newPopularityOrder === '비인기 순'){
@@ -53,7 +61,7 @@ const Movie = () => {
             }
             return 0;
         })
-        setSortedMovies(sortedMovies);
+        setSortedMovies(Movies);
     }
     const orderPopularity = (event) => {
         const checkOrder = event.target.innerText;
@@ -115,8 +123,8 @@ const Movie = () => {
         nextLabel=">"
         onPageChange={handlePageClick}
         pageRangeDisplayed={3}
-        marginPagesDisplayed={2}
-        pageCount={12}
+        marginPagesDisplayed={1}
+        pageCount={totalPage > 12 ? 12 : totalPage}
         previousLabel="<"
         pageClassName="page-item"
         pageLinkClassName="page-link"

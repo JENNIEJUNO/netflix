@@ -35,3 +35,10 @@ body{
         font-size:4vw;
     }
 }
+.noData{
+    font-size:30px;
+    top:20vh;
+    padding:40px 30px;
+    position:absolute;
+    border:solid 1px white;
+}
