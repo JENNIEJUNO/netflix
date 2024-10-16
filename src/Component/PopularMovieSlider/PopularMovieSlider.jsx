@@ -10,7 +10,7 @@ const PopularMovieSlider = ({genreData}) => {
       return <div className="spinner">
           <ClipLoader color="red" size={100}/>
       </div>
-  }
+    }
     if(isError){
         return <div>Error:{error.message}</div>
     }
