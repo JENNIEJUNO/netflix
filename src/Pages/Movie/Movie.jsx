@@ -21,29 +21,9 @@ const Movie = () => {
     const moiveGenre = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History',
         'Horror', 'Music', 'Mystery', 'Romance', 'Science Fiction', 'TV Movie', 'Thriller', 'War', 'Western'
     ]
-    
-    useEffect(() => {
-        if (data?.results) {
-            setSortedMovies(data.results)
-        }
-    }, [data])
-    if(isLoading){
-        return <div className="spinner">
-            <ClipLoader color="red" size={100}/>
-        </div>
-    }
-    if(isError){
-        return <div>Error:{error.message}</div>
-    }
-    if(!sortedMovies || sortedMovies.length === 0){
-        return<div style={{width:"100%", display:"flex", justifyContent:"center", position:"relative"}}>
-            <Badge bg="danger" className="noData">No data available</Badge>
-        </div>
-    }
-
-    const totalPage = Math.ceil(sortedMovies.length / 20)
 
     const updateMovies = (newGenreOrder, newPopularityOrder) => {
+        if (!data || !data.results) return;
         const genreFilteredMovies = newGenreOrder === '장르별 검색'
         ? data.results
         : data.results.filter(movie => 
@@ -63,6 +43,32 @@ const Movie = () => {
         })
         setSortedMovies(Movies);
     }
+    
+    useEffect(() => {
+        if (data?.results && genreOrder === '장르별 검색') {
+            setSortedMovies(data.results)
+        }else{
+            updateMovies(genreOrder, popularyityOrder)
+        }
+    }, [data, genreOrder])
+
+    if(isLoading){
+        return <div className="spinner">
+            <ClipLoader color="red" size={100}/>
+        </div>
+    }
+    if(isError){
+        return <div>Error:{error.message}</div>
+    }
+    if(!sortedMovies || sortedMovies.length === 0){
+        return<div style={{width:"100%", display:"flex", justifyContent:"center", position:"relative"}}>
+            <Badge bg="danger" className="noData">No data available</Badge>
+        </div>
+    }
+
+    const totalPage = Math.ceil(sortedMovies.length / 8)
+    const currentMovies = sortedMovies.slice((page - 1) * 8, page * 8);
+    
     const orderPopularity = (event) => {
         const checkOrder = event.target.innerText;
         setPopularyityOrder(checkOrder)
@@ -72,6 +78,7 @@ const Movie = () => {
     const orderGenre = (event) => {
         const checkOrder = event.target.innerText;
         setGenreOrder(checkOrder)
+        setPage(1)
         updateMovies(checkOrder, popularyityOrder)
     }
 
@@ -112,7 +119,7 @@ const Movie = () => {
                 ),
             )}
         <Row>
-            {sortedMovies.map((movie) => (
+            {currentMovies.map((movie) => (
                 <Col lg={3} xs={6} style={{margin:"3vh 0"}}>
                     <MovieCard movie={movie} genreData={genreData}/>
                 </Col>
@@ -124,7 +131,7 @@ const Movie = () => {
         onPageChange={handlePageClick}
         pageRangeDisplayed={3}
         marginPagesDisplayed={1}
-        pageCount={totalPage > 12 ? 12 : totalPage}
+        pageCount={totalPage}
         previousLabel="<"
         pageClassName="page-item"
         pageLinkClassName="page-link"
